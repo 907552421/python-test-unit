@@ -24,23 +24,26 @@ class Grabber(object):
         formatter = logging.Formatter(fmt)
         handler.setFormatter(formatter)
 
-        logger = logging.getLogger('test')
-        logger.addHandler(handler)
-        logger.setLevel(logging.DEBUG)
-        self.logger = logger
+        loggertemp = logging.getLogger('grabber')
+        loggertemp.addHandler(handler)
+        loggertemp.setLevel(logging.DEBUG)
+        self.logger = loggertemp
 
 
     def grab(self,url):
         headers={'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'}
-        request = urllib2.Request(url,headers = headers)
-        result = urllib2.urlopen(request)
-        result_data = result.read()
-        filename = uuid.uuid1()
         try:
+            request = urllib2.Request(url,headers = headers)
+            result = urllib2.urlopen(request)
+            result_data = result.read()
+            filename = uuid.uuid1()
             f = open('/root/practice/python_practice/python-test-unit/documents/%s' % filename,'w')
+            f.write(url)
+            f.write('\n')
             f.write(result_data)
             f.close()
             self.logger.info('[Success] [%s]'% url)
+            return result_data
         except StandardError ,e:
             self.logger.error('[Failed] [%s] [%s]'% (url,e))
         finally:
