@@ -6,7 +6,9 @@ import datetime
 import os
 import logging
 import logging.handlers
-
+import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
 
 class HTMLParserLinksHandler(HTMLParser):
     def __init__(self):

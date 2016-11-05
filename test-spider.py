@@ -4,4 +4,4 @@
 import spider
 
 sp = spider.Spider()
-sp.grab_from_seed()
+sp.grab_from_seed(500)
